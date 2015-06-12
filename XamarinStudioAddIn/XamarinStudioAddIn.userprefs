@@ -1,0 +1,17 @@
+﻿<Properties StartupItem="XamarinStudioAddIn\XamarinStudioAddIn.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="XamarinStudioAddIn\ShowReferenceObjectHandler.cs">
+    <Files>
+      <File FileName="XamarinStudioAddIn\ShowReferenceObjectHandler.cs" Line="17" Column="6" />
+      <File FileName="XamarinStudioAddIn\ReferenceObjectsPad.cs" Line="1" Column="1" />
+      <File FileName="XamarinStudioAddIn\PadWindow.cs" Line="1" Column="1" />
+      <File FileName="XamarinStudioAddIn\Properties\Manifest.addin.xml" Line="7" Column="77" NotebookId="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="D:\Den\Programming\C#\_XamarinStudio\XamarinStudioAddIn\XamarinStudioAddIn\ShowReferenceObjectHandler.cs" line="23" column="38" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
