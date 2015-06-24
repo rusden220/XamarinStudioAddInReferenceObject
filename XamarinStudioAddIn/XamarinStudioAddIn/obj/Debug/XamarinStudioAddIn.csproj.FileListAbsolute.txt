@@ -5,10 +5,3 @@ D:\Den\Programming\C#\_XamarinStudio\XamarinStudioAddIn\XamarinStudioAddIn\bin\D
 D:\Den\Programming\C#\_XamarinStudio\XamarinStudioAddIn\XamarinStudioAddIn\bin\Debug\XamarinStudioAddIn.pdb
 D:\Den\Programming\C#\_XamarinStudio\XamarinStudioAddIn\XamarinStudioAddIn\obj\Debug\XamarinStudioAddIn.dll
 D:\Den\Programming\C#\_XamarinStudio\XamarinStudioAddIn\XamarinStudioAddIn\obj\Debug\XamarinStudioAddIn.pdb
-D:\Den\Programming\git\XamarinStudioAddInReferenceObject\XamarinStudioAddIn\XamarinStudioAddIn\bin\Debug\XamarinStudioAddIn.dll
-D:\Den\Programming\git\XamarinStudioAddInReferenceObject\XamarinStudioAddIn\XamarinStudioAddIn\bin\Debug\XamarinStudioAddIn.pdb
-D:\Den\Programming\git\XamarinStudioAddInReferenceObject\XamarinStudioAddIn\XamarinStudioAddIn\obj\Debug\MonoDevelop-Addin-Deps.g.cs
-D:\Den\Programming\git\XamarinStudioAddInReferenceObject\XamarinStudioAddIn\XamarinStudioAddIn\obj\Debug\_AddinFiles.addin.xml
-D:\Den\Programming\git\XamarinStudioAddInReferenceObject\XamarinStudioAddIn\XamarinStudioAddIn\obj\Debug\XamarinStudioAddIn.csprojResolveAssemblyReference.cache
-D:\Den\Programming\git\XamarinStudioAddInReferenceObject\XamarinStudioAddIn\XamarinStudioAddIn\obj\Debug\XamarinStudioAddIn.dll
-D:\Den\Programming\git\XamarinStudioAddInReferenceObject\XamarinStudioAddIn\XamarinStudioAddIn\obj\Debug\XamarinStudioAddIn.pdb

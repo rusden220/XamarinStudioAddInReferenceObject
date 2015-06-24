@@ -34,6 +34,7 @@
     <Compile Include="ShowReferenceObjectHandler.cs" />
     <Compile Include="ReferenceObjectsPad.cs" />
     <Compile Include="PadWindow.cs" />
+    <Compile Include="DebugProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />
