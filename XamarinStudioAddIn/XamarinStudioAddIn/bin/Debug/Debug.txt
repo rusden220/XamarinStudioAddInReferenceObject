@@ -1,0 +1,39 @@
+﻿24.06.2015 2:59:16 #### public ReferenceObjectsPad() ####
+24.06.2015 2:59:16 #### public void Initialize (IPadWindow window) ####
+24.06.2015 2:59:16 #### OnUpdateList() ####
+24.06.2015 2:59:16 #### Name: xvalue: 0
+24.06.2015 2:59:16 #### Name: strvalue: (null)
+24.06.2015 2:59:16 #### OnUpdateList() ####
+24.06.2015 2:59:16 #### Name: xvalue: 0
+24.06.2015 2:59:16 #### Name: strvalue: (null)
+
+24.06.2015 3:01:27 #### OnUpdateList() ####
+24.06.2015 3:01:27 #### Name: xvalue: 10
+24.06.2015 3:01:27 #### Name: strvalue: "Hello, World!"
+24.06.2015 3:01:27 #### OnUpdateList() ####
+24.06.2015 3:01:27 #### Name: xvalue: 10
+24.06.2015 3:01:27 #### Name: strvalue: "Hello, World!"
+
+24.06.2015 3:03:13 #### public ReferenceObjectsPad() ####
+24.06.2015 3:03:13 #### public void Initialize (IPadWindow window) ####
+24.06.2015 3:03:13 #### OnUpdateList() ####
+24.06.2015 3:03:21 #### OnUpdateList() ####
+24.06.2015 3:03:21 #### Name: xvalue: 0
+24.06.2015 3:03:21 #### Name: strvalue: (null)
+24.06.2015 3:21:53 #### public ReferenceObjectsPad() ####
+24.06.2015 3:21:53 #### public void Initialize (IPadWindow window) ####
+24.06.2015 3:21:53 #### OnUpdateList() ####
+24.06.2015 3:22:00 #### OnUpdateList() ####
+24.06.2015 3:22:00 #### Name: xvalue: 0
+24.06.2015 3:22:00 #### Name: strvalue: (null)
+24.06.2015 3:22:34 #### OnUpdateList() ####
+24.06.2015 3:22:56 #### OnUpdateList() ####
+24.06.2015 3:22:58 #### OnUpdateList() ####
+24.06.2015 3:23:01 #### OnUpdateList() ####
+24.06.2015 3:23:02 #### OnUpdateList() ####
+24.06.2015 3:29:00 #### public ReferenceObjectsPad() ####
+24.06.2015 3:29:00 #### public void Initialize (IPadWindow window) ####
+24.06.2015 3:29:00 #### OnUpdateList() ####
+24.06.2015 3:33:58 Start ReferenceObjectsPad
+24.06.2015 3:33:58 #### public void Initialize (IPadWindow window) ####
+24.06.2015 3:33:58 #### OnUpdateList() ####
