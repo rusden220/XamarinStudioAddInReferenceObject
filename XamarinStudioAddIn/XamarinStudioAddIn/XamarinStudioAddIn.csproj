@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{86F6BF2A-E449-4B3E-813B-9ACC37E5545F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{611A4951-5321-4033-8F66-FF56D95B96E3}</ProjectGuid>
+    <ProjectGuid>{195F2808-F01C-4ABB-973E-1DA0302EC156}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>XamarinStudioAddIn</RootNamespace>
     <AssemblyName>XamarinStudioAddIn</AssemblyName>
@@ -30,11 +30,10 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\AddinInfo.cs" />
-    <Compile Include="InsertDataHandler.cs" />
     <Compile Include="ShowReferenceObjectHandler.cs" />
     <Compile Include="ReferenceObjectsPad.cs" />
-    <Compile Include="PadWindow.cs" />
     <Compile Include="DebugProvider.cs" />
+    <Compile Include="Pointer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Manifest.addin.xml" />
@@ -46,8 +45,5 @@
   </ItemGroup>
   <ItemGroup>
     <AddinReference Include="MonoDevelop.Debugger" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Drawing" />
   </ItemGroup>
 </Project>

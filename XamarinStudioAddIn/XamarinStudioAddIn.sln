@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinStudioAddIn", "XamarinStudioAddIn\XamarinStudioAddIn.csproj", "{611A4951-5321-4033-8F66-FF56D95B96E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamarinStudioAddIn", "XamarinStudioAddIn\XamarinStudioAddIn.csproj", "{195F2808-F01C-4ABB-973E-1DA0302EC156}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,9 +9,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{611A4951-5321-4033-8F66-FF56D95B96E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{611A4951-5321-4033-8F66-FF56D95B96E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{611A4951-5321-4033-8F66-FF56D95B96E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{611A4951-5321-4033-8F66-FF56D95B96E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{195F2808-F01C-4ABB-973E-1DA0302EC156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195F2808-F01C-4ABB-973E-1DA0302EC156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195F2808-F01C-4ABB-973E-1DA0302EC156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195F2808-F01C-4ABB-973E-1DA0302EC156}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

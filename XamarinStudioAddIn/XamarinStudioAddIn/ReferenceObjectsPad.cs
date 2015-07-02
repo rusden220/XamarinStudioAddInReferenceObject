@@ -8,59 +8,98 @@ using System.Diagnostics;
 
 namespace XamarinStudioAddIn
 {
-	public class ReferenceObjectsPad: IPadContent
+	public class ReferenceObjectsPad:IPadContent
 	{
 		protected Widget _control;
+		private IPadWindow _iPadWindow;
 		private TreeView _treeView;
 		private TreeStore _treeStore;
-		private IPadWindow _iPadWindow;
+		private Button _button;
 
-		public ReferenceObjectsPad()
+		public ReferenceObjectsPad ()
 		{
-			try {
-				DebugProvider.Write("Start ReferenceObjectsPad");
-				_treeView = new TreeView ();
-				//_treeStore = new TreeStore (_treeView.Handle);
-				_treeStore = new TreeStore (typeof(string));
-				var expCol = new TreeViewColumn ();
-				expCol.Title = "Name" ;
-				expCol.Resizable = true;
-				expCol.Sizing = TreeViewColumnSizing.Fixed;
-				expCol.MinWidth = 15;
-				_treeView.AppendColumn (expCol);
-				_control = new ScrolledWindow ();
-				((ScrolledWindow)_control).Add (_treeView);
-				((ScrolledWindow)_control).ShowAll ();
-			} catch (Exception ex) {
-				DebugProvider.Write (ex.Message);
-			}
-
+			
 		}
+
 		public void Initialize (IPadWindow window)
 		{
-			DebugProvider.Write("#### public void Initialize (IPadWindow window) ####");
+			DebugProvider.Write ("Initialize");
+
+//			DebuggingService.CurrentFrameChanged += OnCurrentFrameChanged;
+//			DebuggingService.PausedEvent += OnPausedEvent;
+//			DebuggingService.ResumedEvent += OnResumedEvent;
+//			DebuggingService.StoppedEvent += OnStoppedEvent;
+//			DebuggingService.EvaluationOptionsChanged += OnEvaluationOptionsChanged;
+
 			_iPadWindow = window;
+			_treeView = new TreeView ();
+			_treeView.ClientEvent += OnClientEvent ;
+
+			var nameColumn = new TreeViewColumn (){ Title = "Name " };
+			var nameCellRender = new Gtk.CellRendererText ();
+			nameColumn.PackStart (nameCellRender, true);
+			_treeView.AppendColumn (nameColumn);
+
+			var valueColumn = new TreeViewColumn (){ Title = "Value " };
+			var valueCellRender = new Gtk.CellRendererText ();
+			valueColumn.PackStart (valueCellRender, true);
+			_treeView.AppendColumn (valueColumn);
+
+			var intPtrColumn = new TreeViewColumn (){ Title = "IntPtr " };
+			var intPtrCellRender = new Gtk.CellRendererText ();
+			intPtrColumn.PackStart (intPtrCellRender, true);
+			_treeView.AppendColumn (intPtrColumn);
+
+			nameColumn.AddAttribute (nameCellRender, "text", 0);
+			valueColumn.AddAttribute (valueCellRender, "text", 1);
+			intPtrColumn.AddAttribute (intPtrCellRender, "text", 2);
+
+			_treeStore = new TreeStore (typeof(string),typeof(string),typeof(string));
+			_treeView.Model = _treeStore;
+			var tb = window.GetToolbar (PositionType.Top);
+			_button = new Button ("Update");
+			_button.Clicked += OnClicked;
+			tb.Add (_button);
+			tb.Add (_treeView);
+			_button.Show ();
+			_treeView.Show ();
+			tb.ShowAll ();
 			_iPadWindow.PadContentShown += delegate {
 				OnUpdateList();
 			};
-
 		}
+		public virtual void OnClicked(object sender, EventArgs e)
+		{
+			DebugProvider.Write ("OnClientEvent");
+			OnUpdateList ();
+		}
+		public virtual void OnClientEvent(object o, ClientEventArgs args)
+		{
+			DebugProvider.Write ("OnClientEvent");
+			OnUpdateList ();
+		}
+
 		public void RedrawContent ()
 		{
-			DebugProvider.Write("#### public void RedrawContent () ####");
-			OnUpdateList ();
+			DebugProvider.Write ("RedrawContent");
 		}
 
 		public virtual void OnUpdateList()
 		{
-			DebugProvider.Write("#### OnUpdateList() ####");
-			//_treeStore.Clear ();
-			//var treeIter = _treeStore.AppendNode();
+			_treeStore.Clear();
+			DebugProvider.Write ("OnUpdateList");
 			var localVar = DebuggingService.CurrentFrame.GetLocalVariables();
+
 			foreach (var item in localVar) {
-				DebugProvider.Write ("#### Name: " + item.Name + "value: " + item.Value);
+				var tt = new Pointer (item.GetRawValue ());
+				_treeStore.AppendValues (item.Name, item.Value, tt.IntPtr.ToString());
+				DebugProvider.Write ("OnUpdateList Name: " + item.Name + " value: " + item.Value + " raw value: " + item.GetRawValue().ToString());
+//				foreach (var tem in item.GetRawValue().GetType().GetProperties()) {
+//					DebugProvider.Write("OnUpdateList \t\t " + tem.Name);
+//				}
 			}
-			//_treeStore.AppendValues (treeIter, localVar);
+			_treeView.Model = _treeStore;
+			_treeView.Show ();
 		}
 
 		public Widget Control {
@@ -68,11 +107,30 @@ namespace XamarinStudioAddIn
 				return _control;
 			}
 		}
-
+		public virtual void OnCurrentFrameChanged (object sender, EventArgs e)
+		{
+			OnUpdateList();
+		}
+		public virtual void OnPausedEvent (object sender, EventArgs e)
+		{
+			OnUpdateList();
+		}
+		public virtual void OnResumedEvent (object sender, EventArgs e)
+		{
+			OnUpdateList();
+		}
+		public virtual void OnStoppedEvent (object sender, EventArgs e)
+		{
+			OnUpdateList();
+		}
+		public virtual void OnEvaluationOptionsChanged (object sender, EventArgs e)
+		{
+			OnUpdateList();
+		}
 		public void Dispose ()
 		{
-			
+			DebugProvider.Write ("Dispose");
 		}
 	}
 }
-	
+

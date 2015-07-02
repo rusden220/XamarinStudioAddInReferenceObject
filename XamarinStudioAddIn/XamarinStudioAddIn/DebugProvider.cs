@@ -12,7 +12,7 @@ namespace XamarinStudioAddIn
 		}
 		public static void Write(string str)
 		{
-			using (var stw = new StreamWriter ("Debug.txt", true, Encoding.UTF8)) {
+			using (var stw = new StreamWriter ("XamarinStudioAddIn_Debug.txt", true, Encoding.UTF8)) {
 				stw.WriteLine (DateTime.Now.ToString() + " " + str);
 			}
 		}

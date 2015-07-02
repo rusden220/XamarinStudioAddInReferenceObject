@@ -13,3 +13,7 @@ using Mono.Addins.Description;
 [assembly:AddinDescription ("XamarinStudioAddIn")]
 [assembly:AddinAuthor ("DenS")]
 
+//[assembly:AddinDependency ("Core", MonoDevelop.BuildInfo.Version)]
+//[assembly:AddinDependency ("Ide", MonoDevelop.BuildInfo.Version)]
+//[assembly:AddinDependency("Dubugger", MonoDevelop.BuildInfo.Version)]
+
