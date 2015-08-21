@@ -1,4 +1,5 @@
-﻿// ReferenceObjectsPad.cs
+﻿
+// ReferenceObjectsPad.cs
 
 using Gtk;
 
@@ -16,76 +17,67 @@ using MonoDevelop.Ide.Gui.Components;
 using MonoDevelop.Ide;
 
 using MonoDevelop.Debugger;
+using System.Reflection;
 
 
 namespace XamarinStudioAddIn
 {
 	public class ReferenceObjectsPad : Gtk.ScrolledWindow, IPadContent
 	{
-		private TreeViewState treeViewState;
-		private PadTreeView tree;
-		private TreeStore store;
-		private bool needsUpdate;
-		private IPadWindow window;
+		private TreeViewState _treeViewState;
+		private PadTreeView _tree;
+		private TreeStore _store;
+		private bool _needsUpdate;
+		private IPadWindow _window;
 
 		enum Columns
 		{
 			Icon,
 			Name,
 			Value,
-			IntPtr,
-			Object,
-			Weight
+			Object
 		}
 
 		public ReferenceObjectsPad ()
 		{
 			this.ShadowType = ShadowType.None;
 
-			store = new TreeStore (typeof(string), typeof (string), typeof(string), typeof(string), typeof(object), typeof(int), typeof(string));
+			_store = new TreeStore (typeof(string), typeof (string), typeof(string), typeof(object));
 
-			tree = new PadTreeView (store);
-			tree.RulesHint = true;
-			tree.HeadersVisible = true;
-			treeViewState = new TreeViewState (tree, (int)Columns.Object);
+			_tree = new PadTreeView (_store);
+			_tree.RulesHint = true;
+			_tree.HeadersVisible = true;
+			_treeViewState = new TreeViewState (_tree, (int)Columns.Object);
 
 			TreeViewColumn col = new TreeViewColumn ();
 			CellRenderer crp = new CellRendererImage ();
 			col.PackStart (crp, false);
 			col.AddAttribute (crp, "stock_id", (int) Columns.Icon);
-			tree.AppendColumn (col);
+			_tree.AppendColumn (col);
 
 			TreeViewColumn FrameCol = new TreeViewColumn ();
 			FrameCol.Title = GettextCatalog.GetString ("Name");
-			FrameCol.PackStart (tree.TextRenderer, true);
-			FrameCol.AddAttribute (tree.TextRenderer, "text", (int) Columns.Name);
-			FrameCol.AddAttribute (tree.TextRenderer, "weight", (int) Columns.Weight);
+			FrameCol.PackStart (_tree.TextRenderer, true);
+			FrameCol.AddAttribute (_tree.TextRenderer, "text", (int) Columns.Name);
+			//FrameCol.AddAttribute (tree.TextRenderer, "weight", (int) Columns.Weight);
 			FrameCol.Resizable = true;
 			FrameCol.Alignment = 0.0f;
-			tree.AppendColumn (FrameCol);
+			_tree.AppendColumn (FrameCol);
 
 			col = new TreeViewColumn ();
 			col.Title = GettextCatalog.GetString ("Value");
 			col.Resizable = true;
-			col.PackStart (tree.TextRenderer, false);
-			col.AddAttribute (tree.TextRenderer, "text", (int) Columns.Value);
-			col.AddAttribute (tree.TextRenderer, "weight", (int) Columns.Weight);
-			tree.AppendColumn (col);
+			col.PackStart (_tree.TextRenderer, false);
+			col.AddAttribute (_tree.TextRenderer, "text", (int) Columns.Value);
+			//col.AddAttribute (tree.TextRenderer, "weight", (int) Columns.Weight);
+			_tree.AppendColumn (col);
 
-			col = new TreeViewColumn ();
-			col.Title = GettextCatalog.GetString ("IntPtr");
-			col.Resizable = true;
-			col.PackStart (tree.TextRenderer, false);
-			col.AddAttribute (tree.TextRenderer, "text", (int) Columns.IntPtr);
-			col.AddAttribute (tree.TextRenderer, "weight", (int) Columns.Weight);
-			tree.AppendColumn (col);
-
-			Add (tree);
+			Add (_tree);
 			ShowAll ();
 
 			UpdateDisplay ();
 
-			tree.RowActivated += OnRowActivated;
+			_tree.RowActivated += OnRowActivated;
 			DebuggingService.CallStackChanged += OnStackChanged;
 			DebuggingService.PausedEvent += OnDebuggerPaused;
 			DebuggingService.ResumedEvent += OnDebuggerResumed;
@@ -99,56 +91,39 @@ namespace XamarinStudioAddIn
 			DebuggingService.PausedEvent -= OnDebuggerPaused;
 			DebuggingService.ResumedEvent -= OnDebuggerResumed;
 			DebuggingService.StoppedEvent -= OnDebuggerStopped;
-		}
-
-		void OnStackChanged (object s, EventArgs a)
-		{
-			UpdateDisplay ();
-		}
+		}		
 
 		void IPadContent.Initialize (IPadWindow window)
 		{
-			this.window = window;
+			_window = window;
 			window.PadContentShown += delegate {
-				if (needsUpdate)
+				if (_needsUpdate)
 					Update ();
 			};
 		}
 
 		public void UpdateDisplay ()
 		{
-			if (window != null && window.ContentVisible)
+			if (_window != null && _window.ContentVisible)
 				Update ();
 			else
-				needsUpdate = true;
+				_needsUpdate = true;
 		}
 
 		void Update ()
 		{
-			if (tree.IsRealized)
-				tree.ScrollToPoint(0, 0);
-			treeViewState.Save();
-			store.Clear();
+			if (_tree.IsRealized)
+				_tree.ScrollToPoint(0, 0);
+			_treeViewState.Save();
+			_store.Clear();			
 			try
-			{				
+			{
+	
 				foreach (var item in DebuggingService.CurrentFrame.GetLocalVariables())
 				{
-					store.AppendValues(GetIcon(item.Flags), item.Name, item.Value, "11", item );
-				}
-				//var processes = DebuggingService.DebuggerSession.GetProcesses();
+					_store.AppendValues(XamarinIcon.GetIcon(item.Flags), item.Name, item.Value, "11", item );
+				}			
 
-				//if (processes.Length == 1)
-				//{
-				//	AppendThreads(TreeIter.Zero, processes[0]);
-				//}
-				//else
-				//{
-				//	foreach (var process in processes)
-				//	{
-				//		TreeIter iter = store.AppendValues(null, process.Id.ToString(), process.Name, process, (int)Pango.Weight.Normal, "");
-				//		AppendThreads(iter, process);
-				//	}
-				//}
 			}
 			catch (Exception ex)
 			{
@@ -156,60 +131,44 @@ namespace XamarinStudioAddIn
 			}
 
 			//tree.ExpandAll();
-			treeViewState.Load();
+			_treeViewState.Load();
 		}
 
-		//void AppendThreads (TreeIter iter, ProcessInfo process)
-		//{
-		//	var threads = process.GetThreads ();
-
-		//	Array.Sort (threads, (ThreadInfo t1, ThreadInfo t2) => t1.Id.CompareTo (t2.Id));
-
-		//	DebuggingService.DebuggerSession.FetchFrames (threads);
-
-		//	foreach (var thread in threads) {
-		//		ThreadInfo activeThread = DebuggingService.DebuggerSession.ActiveThread;
-		//		var name = thread.Name == null && thread.Id == 1 ? "Main Thread" : thread.Name;
-		//		var weight = thread == activeThread ? Pango.Weight.Bold : Pango.Weight.Normal;
-		//		var icon = thread == activeThread ? Gtk.Stock.GoForward : null;
-
-		//		if (iter.Equals (TreeIter.Zero))
-		//			store.AppendValues (icon, thread.Id.ToString (), name, thread, (int) weight, thread.Location);
-		//		else
-		//			store.AppendValues (iter, icon, thread.Id.ToString (), name, thread, (int) weight, thread.Location);
-		//	}
-		//}
-
-		//void UpdateThread (TreeIter iter, ThreadInfo thread, ThreadInfo activeThread)
-		//{
-		//	var weight = thread == activeThread ? Pango.Weight.Bold : Pango.Weight.Normal;
-		//	var icon = thread == activeThread ? Gtk.Stock.GoForward : null;
-
-		//	store.SetValue (iter, (int) Columns.Weight, (int) weight);
-		//	store.SetValue (iter, (int) Columns.Icon, icon);
-		//}		
+		private bool isExistVariable(object obj, out ObjectValue objectValue)
+		{
+			objectValue = null;
+			foreach (var item in DebuggingService.CurrentFrame.GetLocalVariables())
+				{
+					if (obj.Equals(item.GetRawValue()))
+					{
+						objectValue = item;
+						return true;
+					}					
+				}
+			return false;
+		}
 
 		void OnRowActivated (object s, RowActivatedArgs args)
 		{
 			TreeIter selected;
-			if (!tree.Selection.GetSelected(out selected))
+			if (!_tree.Selection.GetSelected(out selected))
 				return;
-			var objectValue = (ObjectValue)store.GetValue(selected, (int)Columns.Object);
-
-			var objectValue1 = (string)store.GetValue(selected, (int)Columns.Name);
-
+			var objectValue = (ObjectValue)_store.GetValue(selected, (int)Columns.Object);
+		
 			if (objectValue != null)
 			{
 				DebuggingService.CallStackChanged -= OnStackChanged;
 				try
-				{	
-					//foreach (var item in GetReferingObject())
-					//{
-					//	store.AppendValues(GetIcon(item.Flags), item.Name, item.Value, "11", item );
-					//}
-
-					store.AppendValues(selected, GetIcon(ObjectValueFlags.Error), objectValue.Name + "->child", "value", "intPtr", objectValue);// Note: setting the active thread causes CallStackChanged to be emitted, but we don't want to refresh our thread list.
-					tree.ExpandToPath(args.Path);
+				{
+					object refs;
+					ReferringObjectsWrapper.GetReferringObjects(objectValue.GetRawValue(),out refs);
+					foreach (var item in (Array)refs) {
+						if(isExistVariable(item, out objectValue))
+						{
+							_store.AppendValues(selected, XamarinIcon.GetIcon(ObjectValueFlags.Error), objectValue.Name, objectValue.Value, "11", objectValue.GetRawValue());
+						}
+					}					
+					_tree.ExpandToPath(args.Path);
 				}
 				catch (Exception ex)
 				{
@@ -229,62 +188,33 @@ namespace XamarinStudioAddIn
 		public string Id {
 			get { return "XamarinStudioAddIn.ReferenceObjectsPad"; }
 		}
-
-		public string DefaultPlacement {
-			get { return "Bottom"; }
-		}
-
-		public void RedrawContent ()
-		{
-			UpdateDisplay ();
-		}
-
-		void OnDebuggerPaused (object s, EventArgs a)
-		{
-			UpdateDisplay ();
-		}
-
-		void OnDebuggerResumed (object s, EventArgs a)
-		{
-			UpdateDisplay ();
-		}
-
-		void OnDebuggerStopped (object s, EventArgs a)
-		{
-			UpdateDisplay ();
-		}
-
-		private string GetIcon(ObjectValueFlags flags)
-		{
-			if ((flags & ObjectValueFlags.Field) != 0 && (flags & ObjectValueFlags.ReadOnly) != 0)
-				return "md-literal";
-
-			string global = (flags & ObjectValueFlags.Global) != 0 ? "static-" : string.Empty;
-			string source;
-
-			switch (flags & ObjectValueFlags.OriginMask)
+		#region event
+			public void RedrawContent ()
 			{
-				case ObjectValueFlags.Property: source = "property"; break;
-				case ObjectValueFlags.Type: source = "class"; global = string.Empty; break;
-				case ObjectValueFlags.Method: source = "method"; break;
-				case ObjectValueFlags.Literal: return "md-literal";
-				case ObjectValueFlags.Namespace: return "md-name-space";
-				case ObjectValueFlags.Group: return "md-open-resource-folder";
-				case ObjectValueFlags.Field: source = "field"; break;
-				case ObjectValueFlags.Variable: return "md-variable";
-				default: return "md-empty";
+				UpdateDisplay ();
 			}
 
-			string access;
-			switch (flags & ObjectValueFlags.AccessMask)
+			void OnDebuggerPaused (object s, EventArgs a)
 			{
-				case ObjectValueFlags.Private: access = "private-"; break;
-				case ObjectValueFlags.Internal: access = "internal-"; break;
-				case ObjectValueFlags.InternalProtected:
-				case ObjectValueFlags.Protected: access = "protected-"; break;
-				default: access = string.Empty; break;
+				UpdateDisplay ();
 			}
-			return "md-" + access + global + source;
-		}
+
+			void OnDebuggerResumed (object s, EventArgs a)
+			{
+				UpdateDisplay ();
+			}
+
+			void OnDebuggerStopped (object s, EventArgs a)
+			{
+				UpdateDisplay ();
+			}
+			void OnStackChanged (object s, EventArgs a)
+			{
+				UpdateDisplay ();
+			}
+		#endregion
+
+		
+
 	}
 }

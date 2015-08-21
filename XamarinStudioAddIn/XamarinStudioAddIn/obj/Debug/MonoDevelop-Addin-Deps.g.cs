@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: Mono.Addins.AddinDependencyAttribute("::MonoDevelop.Core", "5.9.3")]
-[assembly: Mono.Addins.AddinDependencyAttribute("::MonoDevelop.Ide", "5.9.3")]
-[assembly: Mono.Addins.AddinDependencyAttribute("::MonoDevelop.Debugger", "5.9.3")]
+[assembly: Mono.Addins.AddinDependencyAttribute("::MonoDevelop.Core", "5.9.5")]
+[assembly: Mono.Addins.AddinDependencyAttribute("::MonoDevelop.Ide", "5.9.5")]
+[assembly: Mono.Addins.AddinDependencyAttribute("::MonoDevelop.Debugger", "5.9.5")]
 
